@@ -1,0 +1,6 @@
+c:\users\dev\documents\visual studio 2013\Projects\booking\booking\bin\booking.dll.config
+c:\users\dev\documents\visual studio 2013\Projects\booking\booking\bin\booking.dll
+c:\users\dev\documents\visual studio 2013\Projects\booking\booking\bin\booking.pdb
+c:\users\dev\documents\visual studio 2013\Projects\booking\booking\obj\Debug\booking.csprojResolveAssemblyReference.cache
+c:\users\dev\documents\visual studio 2013\Projects\booking\booking\obj\Debug\booking.dll
+c:\users\dev\documents\visual studio 2013\Projects\booking\booking\obj\Debug\booking.pdb
