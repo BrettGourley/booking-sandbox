@@ -10,3 +10,9 @@ C:\Users\1\Documents\Visual Studio 2013\Projects\booking-sandbox\booking\bin\boo
 C:\Users\1\Documents\Visual Studio 2013\Projects\booking-sandbox\booking\obj\Debug\booking.csprojResolveAssemblyReference.cache
 C:\Users\1\Documents\Visual Studio 2013\Projects\booking-sandbox\booking\obj\Debug\booking.dll
 C:\Users\1\Documents\Visual Studio 2013\Projects\booking-sandbox\booking\obj\Debug\booking.pdb
+C:\Users\Dev\Documents\Visual Studio 2013\Projects\booking\booking-sandbox\booking\bin\booking.dll.config
+C:\Users\Dev\Documents\Visual Studio 2013\Projects\booking\booking-sandbox\booking\bin\booking.dll
+C:\Users\Dev\Documents\Visual Studio 2013\Projects\booking\booking-sandbox\booking\bin\booking.pdb
+C:\Users\Dev\Documents\Visual Studio 2013\Projects\booking\booking-sandbox\booking\obj\Debug\booking.csprojResolveAssemblyReference.cache
+C:\Users\Dev\Documents\Visual Studio 2013\Projects\booking\booking-sandbox\booking\obj\Debug\booking.dll
+C:\Users\Dev\Documents\Visual Studio 2013\Projects\booking\booking-sandbox\booking\obj\Debug\booking.pdb

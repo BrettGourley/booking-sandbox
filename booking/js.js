@@ -1,12 +1,16 @@
 $(document).ready(function(){
-	var reviewArr = [],
-		reviewId = 0,	
-		startItem = 0, 
-		currentIndex = startItem, 
-		itemsPerPage = 5, 
-		lastIndex = 0; 
-		nextIndex = itemsPerPage;
-		isDirty = false;
+    var reviewArr = [],
+		reviewId = 0,
+		startItem = 0,
+		currentIndex = startItem,
+		itemsPerPage = 5,
+		lastIndex = 0,
+		nextIndex = itemsPerPage,
+        isDirty = false,
+        counter = 0,
+        hotelLrgImgArr = [],
+        interval,
+        autoplay = "Start";
 
 	var xmlhttp = new XMLHttpRequest();
 	var url = "hotels.txt";
@@ -23,7 +27,8 @@ $(document).ready(function(){
 
 	function getJson(arr) {
 	    var reviews = "",
-            hotelImages = "",
+            hotelLrgImg = "",
+            hotelThumbImg = "",
             hotelName = "",
             hotelStars = "",
             hotelAddress = "",
@@ -35,11 +40,14 @@ $(document).ready(function(){
 	        hotelStars = hotel.hotelStars;
 	        hotelAddress = hotel.hotelAddress;
 	        // load hotel name
+
+	        hotelLrgImg = "<div class='autoplay'>" + autoplay + " Autoplay</div><img src='" + hotel.img[0].imgLarge + "' alt='" + hotel.img[0].imgDescription + "' />";
+            
 	        for (var img in hotel.img) {
-	            hotelImages += "<li class='one_photo'><a href='" + hotel.img[img].imgLarge
-                    + "'><img src='" + hotel.img[img].imgThumb
-                    + "' alt='" + hotel.img[img].imgDescription
-                    + "' /></a></li>";
+	            hotelThumbImg += "<li class='one_photo'><img src='" + hotel.img[img].imgThumb
+                    + "'alt='" + hotel.img[img].imgDescription
+	                + "'class='img-tab' /></li>";
+	            hotelLrgImgArr.push(hotel.img[img].imgLarge);
 	        }
 	        //load hotel description
 	        for (var desc = 0; desc < hotel.hotelDescription.length; desc++) {
@@ -66,22 +74,55 @@ $(document).ready(function(){
         /*** DOM interaction ***/
         // add hotel name and rating
 	    $(".hotel_name").html(hotelName + "<span class='stars'>" + hotelStars + "</span>");
-
 	    // add hotel address
 	    $(".hotel_address").html(hotelAddress);
-
 	    // add hotel description
 	    $('.description').append(hotelDescription);
-
         // add photos 
-	    $(".photos").html("<ul>" + hotelImages + "</ul>");
-
+	    $(".large-img").html(hotelLrgImg);
+	    $(".thumb-img").html("<ul>" + hotelThumbImg + "</ul>");
 	    // add facilities
 	    $(".facilities").append("<ul>" + hotelFacilities + "</ul>");
-
         // add reviews
 	    $(".reviews_list").html(reviews);
+	    
 	}
+
+	var ImageBinder = function () {
+	    hotelLrgImg = "<div class='autoplay'>" + autoplay + " Autoplay</div><img src='" + hotelLrgImgArr[counter] + "' />";
+	    $(".large-img").html(hotelLrgImg);
+	    counter = counter >= hotelLrgImgArr.length-1 ? 0 : counter + 1;
+	}
+
+	$('body').on('click', 'img', function () {
+	    if ($(this).hasClass("img-tab")) {
+	        hotelLrgImg = "<div class='autoplay'></div><img src='" + $(this).attr('src').replace('_thumb', '_large') + "' />";
+	        console.log = hotelLrgImg;
+	        $(".large-img").html(hotelLrgImg);
+	        if (autoplay) {
+	            $(".autoplay").html = "Start auto play";
+	        } else {
+	            $(".autoplay").html = "Stop auto play";
+	        }
+	    }
+	    
+	});
+	$('body').on('click', 'div', function () {
+	    if ($(this).hasClass("autoplay")) {
+	        if (autoplay == "Start"){
+	            autoplay = "Stop";
+	            interval = setInterval(ImageBinder, 5000);
+	        }else{
+	            autoplay = "Start";	            
+	            clearInterval(interval);
+	        }
+	        $(this).html(autoplay + " Autoplay");
+	    }
+	});
+
+	//$(".test").click(function () {
+	//    $(this).hide();
+	//});
 
 	//if(isDirty == false){
 	//	getListItems();

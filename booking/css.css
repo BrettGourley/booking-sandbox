@@ -56,7 +56,40 @@ h2 {
 }
 
 /* photos */
-
+.photos 
+{
+    position: relative;
+    width: 65%;
+    height: 100%;
+}
+.large-img{
+    height: 342px;
+    width: 624px;
+}
+.autoplay{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 342px;
+    width: 624px;
+    float: left;
+    opacity: 0;
+}
+    .autoplay:hover{
+        cursor: pointer;
+        text-align: center;
+        line-height: 342px;
+        vertical-align: middle;
+        font-size: 20px;
+        color: #7c7c7c;
+        opacity: 1;
+        background-color: rgba(0,0,0,.8);
+    }
+.large-img img
+{
+    transition: 2s;
+    width: 100%;
+}
 .photos ul {
 	list-style: none;
 	padding: 0;
@@ -64,13 +97,20 @@ h2 {
 }
 
 .photos .one_photo {
-	display: inline;
+	display: inline-block;
+    height: 44px;
 }
 
 .photos .one_photo img {
-	margin: 3px;
-	width: 80px;
+	margin: 2px;
+	width: 40px;
+    cursor: pointer;
 }
+
+.photos .one_photo:hover {
+    background-color: #0896ff;
+}
+
 
 /* reviews */
 
