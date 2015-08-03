@@ -43,7 +43,7 @@ h2 {
 	margin-bottom: 20px;
 }
 
-.hotel_name {
+#hotel_name {
 	margin: 0 0 5px 0;
 }
 
@@ -74,7 +74,7 @@ h2 {
 
 /* reviews */
 
-#reviews_list {
+.reviews_list {
 	list-style: none;
 	padding: 0;
 	margin: 0;
