@@ -16,17 +16,18 @@ html {
 body {
 	padding: 0;
 	margin: 0 auto;
-	width: 960px;
+	width: 1200px;
 }
 
 section {
 	margin: 0 0 20px 0;
-	clear: both;
+	/*clear: both;*/
 }
 
 h1 {
 	font-size: 32px;
 	color: #0896ff;
+    margin-top: 0px;
 }
 
 h2 {
@@ -38,9 +39,11 @@ h2 {
 /* header */
 
 .header {
-	border-bottom: 1px dotted #ccc;
-	padding-bottom: 10px;
-	margin-bottom: 20px;
+	width: 45%;
+    border-bottom: 1px dotted #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    float: left;
 }
 
 #hotel_name {
@@ -59,36 +62,54 @@ h2 {
 .photos 
 {
     position: relative;
-    width: 65%;
+    float: right;
+    margin-top: 12px;
     height: 100%;
 }
-.large-img{
-    height: 342px;
-    width: 624px;
-}
+
 .autoplay{
     position: absolute;
     top: 0px;
     left: 0px;
     height: 342px;
     width: 624px;
-    float: left;
-    opacity: 0;
+    text-align:center;
+    vertical-align: middle;
+    font-size: 20px;
+    line-height: 342px;
+    color: rgba(0,0,0,0);
+    z-index: 999;
+    -webkit-transition: background-color .2s linear;
+    -moz-transition: background-color .2s linear;
+    -o-transition: background-color .2s linear;
+    transition: background-color .2s linear;
+    background-color: rgba(0,0,0,0);
 }
     .autoplay:hover{
+        color: #0896ff;
         cursor: pointer;
-        text-align: center;
-        line-height: 342px;
-        vertical-align: middle;
-        font-size: 20px;
-        color: #7c7c7c;
-        opacity: 1;
         background-color: rgba(0,0,0,.8);
     }
+.large-img{
+    position:relative;
+    height: 342px;
+    width: 624px;
+}
 .large-img img
 {
-    transition: 2s;
+    position:absolute;
+    z-index: 9;
+    -webkit-transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -o-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
     width: 100%;
+}
+.large-img img.transparent{
+    opacity: 0;
+}
+.img-top{
+    opacity: 0;
 }
 .photos ul {
 	list-style: none;
@@ -111,6 +132,10 @@ h2 {
     background-color: #0896ff;
 }
 
+.description{
+    display: block;
+    width: 45%;
+}
 
 /* reviews */
 
@@ -232,7 +257,10 @@ h2 {
 }
 
 /* Facilities */
-
+.facilities
+{
+    clear: both;
+}
 .facilities ul {
 	list-style: none;
 	padding: 0;

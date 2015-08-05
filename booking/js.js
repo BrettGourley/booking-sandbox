@@ -7,10 +7,15 @@ $(document).ready(function(){
 		lastIndex = 0,
 		nextIndex = itemsPerPage,
         isDirty = false,
-        counter = 0,
         hotelLrgImgArr = [],
-        interval,
-        autoplay = "Start";
+        carouselCounter = 0,
+        counter = 0,
+        counter2 = 0,
+        interval = '',
+        carouselToggle = false,
+        autoplay = "Start",
+        autoplayTxt = " Slideshow",
+        slideShowTimer = 5000;
 
 	var xmlhttp = new XMLHttpRequest();
 	var url = "hotels.txt";
@@ -35,13 +40,17 @@ $(document).ready(function(){
             hotelDescription = "",
             hotelFacilities = "";
 	    for (var i = 0; i < arr.hotel.length; i++) {
-	        var hotel = arr.hotel[i];
+	        var hotel = arr.hotel[i],
+	            revImgArr = hotel.img.reverse();
 	        hotelName = hotel.hotelName;
 	        hotelStars = hotel.hotelStars;
 	        hotelAddress = hotel.hotelAddress;
-	        // load hotel name
 
-	        hotelLrgImg = "<div class='autoplay'>" + autoplay + " Autoplay</div><img src='" + hotel.img[0].imgLarge + "' alt='" + hotel.img[0].imgDescription + "' />";
+	        // load hotel name
+	        for (var lrgImg in revImgArr) {
+	            hotelLrgImg += "<img src='" + revImgArr[lrgImg].imgLarge + "' alt='" + revImgArr[lrgImg].imgDescription + "' />";
+	        }
+	        hotelLrgImg = "<div class='autoplay'>" + autoplay + autoplayTxt + "</div>" + hotelLrgImg;
             
 	        for (var img in hotel.img) {
 	            hotelThumbImg += "<li class='one_photo'><img src='" + hotel.img[img].imgThumb
@@ -49,6 +58,7 @@ $(document).ready(function(){
 	                + "'class='img-tab' /></li>";
 	            hotelLrgImgArr.push(hotel.img[img].imgLarge);
 	        }
+	        carouselCounter = hotelLrgImgArr.length+1;
 	        //load hotel description
 	        for (var desc = 0; desc < hotel.hotelDescription.length; desc++) {
 	            hotelDescription += "<p>"
@@ -62,13 +72,13 @@ $(document).ready(function(){
 	        }
 	        
 
-		    for (var j = 0; j < arr.hotel[i].review.length; j++) {
+		    /*for (var j = 0; j < hotel.review.length; j++) {
 		        reviews += "<li class='one_review'><strong class='review_score'>"
                     + hotel.review[j].reviewScore + "</strong>"
                     + "<blockquote class='review_content'>"
                     + hotel.review[j].reviewContent + "<cite>"
                     + hotel.review[j].cite + "</cite" + "</blockquote></li>";
-		    }
+		    }*/
 		    
 	    }
         /*** DOM interaction ***/
@@ -89,9 +99,15 @@ $(document).ready(function(){
 	}
 
 	var ImageBinder = function () {
-	    hotelLrgImg = "<div class='autoplay'>" + autoplay + " Autoplay</div><img src='" + hotelLrgImgArr[counter] + "' />";
-	    $(".large-img").html(hotelLrgImg);
-	    counter = counter >= hotelLrgImgArr.length-1 ? 0 : counter + 1;
+	    carouselToggle = carouselCounter <= 2 ? true : (carouselCounter > hotelLrgImgArr.length + 1 ? false : carouselToggle);
+	    carouselCounter = carouselCounter > hotelLrgImgArr.length + 1 ? carouselCounter-- : (carouselCounter < 3 ? carouselCounter++ : carouselCounter);
+	    if (!carouselToggle) {	        
+	        $(".large-img img:nth-child(" + carouselCounter + ")").addClass("img-top");
+	        carouselCounter--;
+	    } else {
+	        $(".large-img img:nth-child(" + carouselCounter + ")").removeClass("img-top");
+	        carouselCounter++;
+	    }
 	}
 
 	$('body').on('click', 'img', function () {
@@ -99,10 +115,10 @@ $(document).ready(function(){
 	        hotelLrgImg = "<div class='autoplay'></div><img src='" + $(this).attr('src').replace('_thumb', '_large') + "' />";
 	        console.log = hotelLrgImg;
 	        $(".large-img").html(hotelLrgImg);
-	        if (autoplay) {
-	            $(".autoplay").html = "Start auto play";
+	        if (autoplay == "Start") {
+	            $(".autoplay").html(autoplay + autoplayTxt);
 	        } else {
-	            $(".autoplay").html = "Stop auto play";
+	            $(".autoplay").html(autoplay + autoplayTxt);
 	        }
 	    }
 	    
@@ -111,12 +127,12 @@ $(document).ready(function(){
 	    if ($(this).hasClass("autoplay")) {
 	        if (autoplay == "Start"){
 	            autoplay = "Stop";
-	            interval = setInterval(ImageBinder, 5000);
+	            interval = setInterval(ImageBinder, slideShowTimer);
 	        }else{
 	            autoplay = "Start";	            
 	            clearInterval(interval);
 	        }
-	        $(this).html(autoplay + " Autoplay");
+	        $(this).html(autoplay + autoplayTxt);
 	    }
 	});
 
