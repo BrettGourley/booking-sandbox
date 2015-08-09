@@ -15,6 +15,8 @@ $(document).ready(function(){
         carouselToggle = false,
         autoplay = "Start",
         autoplayTxt = " Slideshow",
+        reverseArr = [],
+        hotelLrgImg = "",
         slideShowTimer = 5000;
 
 	var xmlhttp = new XMLHttpRequest();
@@ -32,7 +34,6 @@ $(document).ready(function(){
 
 	function getJson(arr) {
 	    var reviews = "",
-            hotelLrgImg = "",
             hotelThumbImg = "",
             hotelName = "",
             hotelStars = "",
@@ -41,16 +42,15 @@ $(document).ready(function(){
             hotelFacilities = "";
 	    for (var i = 0; i < arr.hotel.length; i++) {
 	        var hotel = arr.hotel[i],
-	            revImgArr = hotel.img.reverse();
+	        revImgArr = hotel.img.reverse()
+	        reverseArr = revImgArr;
 	        hotelName = hotel.hotelName;
 	        hotelStars = hotel.hotelStars;
 	        hotelAddress = hotel.hotelAddress;
 
 	        // load hotel name
-	        for (var lrgImg in revImgArr) {
-	            hotelLrgImg += "<img src='" + revImgArr[lrgImg].imgLarge + "' alt='" + revImgArr[lrgImg].imgDescription + "' />";
-	        }
-	        hotelLrgImg = "<div class='autoplay'>" + autoplay + autoplayTxt + "</div>" + hotelLrgImg;
+	        loadHotelImages(revImgArr, true);
+
             
 	        for (var img in hotel.img) {
 	            hotelThumbImg += "<li class='one_photo'><img src='" + hotel.img[img].imgThumb
@@ -89,7 +89,7 @@ $(document).ready(function(){
 	    // add hotel description
 	    $('.description').append(hotelDescription);
         // add photos 
-	    $(".large-img").html(hotelLrgImg);
+	    //$(".large-img").html(hotelLrgImg);
 	    $(".thumb-img").html("<ul>" + hotelThumbImg + "</ul>");
 	    // add facilities
 	    $(".facilities").append("<ul>" + hotelFacilities + "</ul>");
@@ -97,8 +97,22 @@ $(document).ready(function(){
 	    $(".reviews_list").html(reviews);
 	    
 	}
+	function loadHotelImages(reverseArr, firstLoad) {
+	    hotelLrgImg = [];
+	    for (var lrgImg in reverseArr) {        
+	        hotelLrgImg += "<img src='" + reverseArr[lrgImg].imgLarge + "' alt='" + reverseArr[lrgImg].imgDescription + "' />";
+	    }
+	    if (!firstLoad) {
+	        $(".large-img > img").remove();
+	    }
+	    hotelLrgImg = "<div class='autoplay'>" + autoplay + autoplayTxt + "</div>" + hotelLrgImg;
+	    $(".large-img").html(hotelLrgImg);
+	};
 
 	var ImageBinder = function () {
+	    if ($(".large-img > img").length <= 1) {
+	        loadHotelImages(reverseArr, false);
+	    }
 	    carouselToggle = carouselCounter <= 2 ? true : (carouselCounter > hotelLrgImgArr.length + 1 ? false : carouselToggle);
 	    carouselCounter = carouselCounter > hotelLrgImgArr.length + 1 ? carouselCounter-- : (carouselCounter < 3 ? carouselCounter++ : carouselCounter);
 	    if (!carouselToggle) {	        
@@ -113,8 +127,9 @@ $(document).ready(function(){
 	$('body').on('click', 'img', function () {
 	    if ($(this).hasClass("img-tab")) {
 	        hotelLrgImg = "<div class='autoplay'></div><img src='" + $(this).attr('src').replace('_thumb', '_large') + "' />";
-	        console.log = hotelLrgImg;
 	        $(".large-img").html(hotelLrgImg);
+	        autoplay = "Start";
+	        clearInterval(interval);
 	        if (autoplay == "Start") {
 	            $(".autoplay").html(autoplay + autoplayTxt);
 	        } else {
