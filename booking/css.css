@@ -20,7 +20,8 @@ body {
 }
 
 section {
-	margin: 0 0 20px 0;
+	margin: 0 0 10px 0;
+    float: left;
 	/*clear: both;*/
 }
 
@@ -34,6 +35,8 @@ h2 {
 	font-size: 22px;
 	font-weight: normal;
 	color: #666;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 /* header */
@@ -63,8 +66,10 @@ h2 {
 {
     position: relative;
     float: right;
+    width: calc(55% - 20px);
     margin-top: 12px;
     height: 100%;
+    padding-left: 20px
 }
 
 .autoplay{
@@ -133,6 +138,7 @@ h2 {
 }
 
 .description{
+    position:relative;
     display: block;
     width: 45%;
 }
@@ -194,7 +200,11 @@ h2 {
 	box-shadow: 0 0 3px #666;
 	font-size: 13px;
 }
-
+.rooms{
+    float: right;
+    width: calc(55% - 20px);
+    padding-left: 20px;
+}
 .rooms_table {
 	width: 100%;
 }
@@ -259,24 +269,25 @@ h2 {
 /* Facilities */
 .facilities
 {
-    float: left;
     width: 45%;
-    /*clear: both;*/
+    clear:left;
+    margin-top: 10px;
 }
 .facilities ul {
 	list-style: none;
+    width: 100%;
 	padding: 0;
 	margin: 0;
 	font-size: 12px;
 }
 
 .facilities li {
-	width: 110px;
+	width: calc(20% - 4px);
     display: inline-block;
     box-sizing: border-box;
     border: 1px solid #0896FF;
     padding: 3px;
-    margin: 5px;
+    margin: 2px;
     border-radius: 2px;
     background-color: #E6EDF6;
 }
@@ -291,4 +302,14 @@ h2 {
 }
 .show-review{
 	display: list-item;
+}
+
+.clear{
+    clear: both;
+}
+
+#map-canvas{
+    width: 45%;
+    height: 400px;
+    background-color: black;
 }
